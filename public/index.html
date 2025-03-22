@@ -26,11 +26,11 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Watermelon.jpg/1200px-Watermelon.jpg?20070516210019" alt="Watermelon">
                 <span>Watermelon</span>
                 <select class="quantity">
+                 
                     <option value="100">100g</option>
-                    <option value="250">250g</option>
-                    <option value="500">500g</option>
+            
                 </select>
-                <button onclick="addToCart('Watermelon', 5)">Add to Cart</button>
+                <button onclick="addToCart('Watermelon', 19)">Add to Cart</button>
             </div>
 
             <!-- Mango -->
@@ -38,11 +38,11 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Hapus_Mango.jpg" alt="Mango">
                 <span>Mango</span>
                 <select class="quantity">
+                    
                     <option value="100">100g</option>
-                    <option value="250">250g</option>
-                    <option value="500">500g</option>
+                    
                 </select>
-                <button onclick="addToCart('Mango', 4)">Add to Cart</button>
+                <button onclick="addToCart('Mango', 59)">Add to Cart</button>
             </div>
 
             <!-- Grapes -->
@@ -50,11 +50,11 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Green_Grape_2.jpg/1200px-Green_Grape_2.jpg?20080819210657" alt="Grapes">
                 <span>Grapes</span>
                 <select class="quantity">
+                    
                     <option value="100">100g</option>
-                    <option value="250">250g</option>
-                    <option value="500">500g</option>
+                    
                 </select>
-                <button onclick="addToCart('Grapes', 3)">Add to Cart</button>
+                <button onclick="addToCart('Grapes', 27)">Add to Cart</button>
             </div>
 
             <!-- Apple -->
@@ -62,11 +62,11 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg" alt="Apple">
                 <span>Apple</span>
                 <select class="quantity">
+                    
                     <option value="100">100g</option>
-                    <option value="250">250g</option>
-                    <option value="500">500g</option>
+                    
                 </select>
-                <button onclick="addToCart('Apple', 6)">Add to Cart</button>
+                <button onclick="addToCart('Apple', 57)">Add to Cart</button>
             </div>
 
             <!-- Orange -->
@@ -74,11 +74,11 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg" alt="Orange">
                 <span>Orange</span>
                 <select class="quantity">
+                    
                     <option value="100">100g</option>
-                    <option value="250">250g</option>
-                    <option value="500">500g</option>
+                    
                 </select>
-                <button onclick="addToCart('Orange', 4)">Add to Cart</button>
+                <button onclick="addToCart('Orange', 29)">Add to Cart</button>
             </div>
 
         </div>
@@ -100,7 +100,7 @@
             cartList.innerHTML = "";
             cart.forEach((item, index) => {
                 let li = document.createElement("li");
-                li.textContent = `${item.name} - ${item.quantity}g - $${item.price}`;
+                li.textContent = `${item.name} - ${item.quantity}g - ₹${item.price}`;
                 cartList.appendChild(li);
             });
         }
@@ -112,7 +112,7 @@
             }
             let cartSummary = "Items in cart:\n";
             cart.forEach(item => {
-                cartSummary += `${item.name} - ${item.quantity}g - $${item.price}\n`;
+                cartSummary += `${item.name} - ${item.quantity}g - ₹${item.price}\n`;
             });
             alert(cartSummary);
         }

@@ -26,7 +26,7 @@
             <tbody id="cartItems"></tbody>
         </table>
 
-        <h3>Total: $<span id="totalPrice">0</span></h3>
+        <h3>Total: ₹ <span id="totalPrice">0</span></h3>
         <button onclick="buyNow()">Buy Now</button>
     </div>
 
@@ -42,7 +42,7 @@
             row.innerHTML = `
                 <td>${item.name}</td>
                 <td>${item.quantity}</td>
-                <td>$${item.price * item.quantity}</td>
+                <td>₹${item.price * item.quantity}</td>
                 <td><button class="remove-btn" onclick="removeFromCart('${item.name}')">Remove</button></td>
             `;
             cartItems.appendChild(row);
