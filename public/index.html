@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Fruit Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Welcome to the Fruit Store</h1>
+        <div>
+            <button class="checkout-btn" onclick="goToCheckout()">Checkout (<span id="cart-count">0</span> items)</button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+
+        </div>
+    </header>
+
+    <!-- Fruit Store Content -->
+    <div class="container">
+        <h2>Select Your Fruit</h2>
+        <div class="fruit-list">
+            
+            <!-- Watermelon -->
+            <div class="fruit-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Watermelon.jpg/1200px-Watermelon.jpg?20070516210019" alt="Watermelon">
+                <span>Watermelon</span>
+                <select class="quantity">
+                    <option value="100">100g</option>
+                    <option value="250">250g</option>
+                    <option value="500">500g</option>
+                </select>
+                <button onclick="addToCart('Watermelon', 5)">Add to Cart</button>
+            </div>
+
+            <!-- Mango -->
+            <div class="fruit-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Hapus_Mango.jpg" alt="Mango">
+                <span>Mango</span>
+                <select class="quantity">
+                    <option value="100">100g</option>
+                    <option value="250">250g</option>
+                    <option value="500">500g</option>
+                </select>
+                <button onclick="addToCart('Mango', 4)">Add to Cart</button>
+            </div>
+
+            <!-- Grapes -->
+            <div class="fruit-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Green_Grape_2.jpg/1200px-Green_Grape_2.jpg?20080819210657" alt="Grapes">
+                <span>Grapes</span>
+                <select class="quantity">
+                    <option value="100">100g</option>
+                    <option value="250">250g</option>
+                    <option value="500">500g</option>
+                </select>
+                <button onclick="addToCart('Grapes', 3)">Add to Cart</button>
+            </div>
+
+            <!-- Apple -->
+            <div class="fruit-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg" alt="Apple">
+                <span>Apple</span>
+                <select class="quantity">
+                    <option value="100">100g</option>
+                    <option value="250">250g</option>
+                    <option value="500">500g</option>
+                </select>
+                <button onclick="addToCart('Apple', 6)">Add to Cart</button>
+            </div>
+
+            <!-- Orange -->
+            <div class="fruit-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg" alt="Orange">
+                <span>Orange</span>
+                <select class="quantity">
+                    <option value="100">100g</option>
+                    <option value="250">250g</option>
+                    <option value="500">500g</option>
+                </select>
+                <button onclick="addToCart('Orange', 4)">Add to Cart</button>
+            </div>
+
+        </div>
+
+     
+    </div>
+
+    <script>
+        let cart = [];
+
+        function addToCart(name, price) {
+            let quantity = event.target.previousElementSibling.value; // Get selected quantity
+            cart.push({ name, quantity, price });
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartList = document.getElementById("cartItems");
+            cartList.innerHTML = "";
+            cart.forEach((item, index) => {
+                let li = document.createElement("li");
+                li.textContent = `${item.name} - ${item.quantity}g - $${item.price}`;
+                cartList.appendChild(li);
+            });
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            let cartSummary = "Items in cart:\n";
+            cart.forEach(item => {
+                cartSummary += `${item.name} - ${item.quantity}g - $${item.price}\n`;
+            });
+            alert(cartSummary);
+        }
+
+        function logout() {
+            localStorage.removeItem("token");
+            window.location.href = "login.html";
+        }
+
+        if (!localStorage.getItem("token")) {
+            window.location.href = "login.html";
+        }
+        function goToCheckout() {
+        window.location.href = "checkout.html";
+    }
+
+    function addToCart(name, price) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let existingItem = cart.find(item => item.name === name);
+
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({ name, price, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+    }
+
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        document.getElementById("cart-count").textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    updateCartCount();
+    </script>
+</body>
+</html>

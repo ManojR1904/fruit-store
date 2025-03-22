@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Signup</h2>
+        <form id="signupForm">
+            <input type="text" id="name" placeholder="Full Name" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required><br>
+            <button type="submit">Signup</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", async function (e) {
+            e.preventDefault(); // Prevent form from submitting
+    
+            // Validate passwords first
+            if (!validateSignup()) {
+                return; // Stop submission if passwords do not match
+            }
+    
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+    
+            try {
+                const res = await fetch("http://localhost:5000/api/auth/signup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, password }),
+                });
+    
+                const data = await res.json();
+    
+                if (data.msg === "Signup successful!") {
+                    alert("Signup successful! Please login.");
+                    window.location.href = "login.html"; // Redirect to login page
+                } else {
+                    alert(data.msg); // Show error message from backend
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            }
+        });
+    
+        function validateSignup() {
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+    
+            // If there's an error message element, create it if missing
+            let errorMessage = document.getElementById("error-message");
+            if (!errorMessage) {
+                errorMessage = document.createElement("p");
+                errorMessage.id = "error-message";
+                errorMessage.style.color = "red";
+                document.getElementById("signupForm").appendChild(errorMessage);
+            }
+    
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match!";
+                errorMessage.style.display = "block"; // Show error message
+                return false; // Prevent form submission
+            } else {
+                errorMessage.style.display = "none"; // Hide error message
+            }
+    
+            return true; // Allow form submission if passwords match
+        }
+    </script>
+    
+</body>
+</html>

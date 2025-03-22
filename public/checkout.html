@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Checkout</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Checkout</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+    
+
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">⬅ Back to Store</button>
+        <h2>Your Cart</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="cartItems"></tbody>
+        </table>
+
+        <h3>Total: $<span id="totalPrice">0</span></h3>
+        <button onclick="buyNow()">Buy Now</button>
+    </div>
+
+    <script>
+         function loadCart() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cartItems = document.getElementById("cartItems");
+        let totalPrice = 0;
+
+        cartItems.innerHTML = "";
+        cart.forEach(item => {
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td>$${item.price * item.quantity}</td>
+                <td><button class="remove-btn" onclick="removeFromCart('${item.name}')">Remove</button></td>
+            `;
+            cartItems.appendChild(row);
+            totalPrice += item.price * item.quantity;
+        });
+
+        document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
+    }
+
+    function removeFromCart(name) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let updatedCart = cart.filter(item => item.name !== name); // Remove item
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        loadCart(); // Reload cart after removing
+    }
+
+    function buyNow() {
+        alert("Thank you for purchasing!");
+        localStorage.removeItem("cart");  // Clear cart
+        window.location.href = "index.html";  // Redirect to main page
+    }
+
+    function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+    }
+    function goBack() {
+        window.location.href = "index.html";  // Redirect to main store page
+    }
+
+    loadCart();
+    </script>
+
+</body>
+</html>
